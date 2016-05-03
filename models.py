@@ -1,5 +1,5 @@
 from django.db import models
-from django-phonenumber-field import PhoneNumberField
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -7,96 +7,159 @@ class Basics(models.Model):
     name = models.CharField(max_length=255)
     label = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
-    phone: PhoneNumberField()
-    website = models.CharField(max_length=255)
-    summary = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    postalCode = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    countryCode= models.CharField(max_length=255)
-    region = models.CharField(max_length=255)
+    phone =  PhoneNumberField(blank=True)
+    website = models.CharField(max_length=255, blank=True)
+    summary = models.TextField(blank=True)
+    address1 = models.CharField(max_length=255, blank=True)
+    address2 = models.CharField(max_length=255, blank=True)
+    postalCode = models.CharField(verbose_name='post code', max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    countryCode= models.CharField(max_length=255, blank=True)
+    region = models.CharField(verbose_name='State/Province', max_length=255, blank=True)
+
+    def __str__(self):
+      return self.name
+
+    class Meta:
+      verbose_name_plural = "Basics"
     
+
 class Profile(models.Model):
   network = models.CharField(max_length=255)
   username = models.CharField(max_length=255)
   url = models.CharField(max_length=255)
+  
+  def __str__(self):
+      return self.network
 
-class Job(models.model):
+
+class Job(models.Model):
   company = models.CharField(max_length=255)
   position = models.CharField(max_length=255)
-  website = models.CharField(max_length=255)
+  website = models.CharField(max_length=255, blank=True)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
   summary = models.CharField(max_length=255)
 
+  def __str__(self):
+      return self.company
+
+
 class JobHighlight(models.Model):
-  job = model.ForeignKey('Job',on_delete=models.CASCADE)
+  job = models.ForeignKey('Job',on_delete=models.CASCADE)
   highlight = models.TextField()
+
+  def __str__(self):
+      return self.highlight
+
 
 class Volunteer(models.Model):
   organization = models.CharField(max_length=255)
   position = models.CharField(max_length=255)
-  website = models.CharField(max_length=255)
+  website = models.CharField(max_length=255, blank=True)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
   summary = models.CharField(max_length=255)
+
+  def __str__(self):
+      return self.organization
+
 
 class VolunteerHighlight(models.Model):
   volunteer = models.ForeignKey('Volunteer',on_delete=models.CASCADE)
   highlight = models.TextField(max_length=255)
 
+  def __str__(self):
+      return self.highlight
+
+
 class Education(models.Model):
   institution = models.CharField(max_length=255)
-  area = models.CharField(max_length=255)
-  studyType = models.CharField(max_length=255)
+  major = models.CharField(max_length=255, blank=True)
+  degreeType = models.CharField(max_length=255)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
-  gpa = models.DecimalField(max_length=255)
+  gpa = models.DecimalField(max_digits=4, decimal_places=3, blank=True)
 
-class Courses(models.Model):
+  class Meta:
+    verbose_name_plural = "Education"
+
+  def __str__(self):
+      return self.institution
+
+
+class Course(models.Model):
   education = models.ForeignKey('Education',on_delete=models.CASCADE)
   course = models.CharField(max_length=255)
 
+  def __str__(self):
+      return self.course
+
+
 class Award(models.Model):
   title = models.CharField(max_length=255)
   date = models.DateField(max_length=255)
   awarder = models.CharField(max_length=255)
-  summary = models.CharField(max_length=255)
+  summary = models.CharField(max_length=255, blank=True)
+
+  def __str__(self):
+      return self.title
+
 
 class Publication(models.Model):
-  name = models.CharField(max_length=255)
+  title = models.CharField(max_length=255)
   publisher = models.CharField(max_length=255)
   releaseDate = models.DateField(max_length=255)
-  website = models.CharField(max_length=255)
-  summary = models.CharField(max_length=255)
+  website = models.CharField(max_length=255, blank=True)
+  summary = models.CharField(max_length=255, blank=True)
 
-class Award(models.Model):
-  title = models.CharField(max_length=255)
-  date = models.DateField(max_length=255)
-  awarder = models.CharField(max_length=255)
-  summary = models.CharField(max_length=255)
+  def __str__(self):
+
+      return self.title
 
 class Skill(models.Model):
   name = models.CharField(max_length=255)
-  level = models.CharField(max_length=255)
-  summary = models.CharField(max_length=255)
+  level = models.CharField(max_length=255, blank=True)
+  summary = models.CharField(max_length=255, blank=True)
 
-class SkillKeywords(models.Model):
+  def __str__(self):
+      return self.name
+
+
+class SkillKeyword(models.Model):
   skill = models.ForeignKey('Skill',on_delete=models.CASCADE)
   keyword = models.CharField(max_length=255)
 
+  def __str__(self):
+      return self.keyword
+
+
 class Language(models.Model):
   name = models.CharField(max_length=255)
-  level = models.CharField(max_length=255)
+  level = models.CharField(max_length=255, blank=True)
+
+  def __str__(self):
+      return self.name
+
 
 class Interest(models.Model):
   name = models.CharField(max_length=255)
+
+  def __str__(self):
+      return self.name
+
   
-class InterestKeywords(models.Model):
+class InterestKeyword(models.Model):
   interest = models.ForeignKey('Interest',on_delete=models.CASCADE)
   keyword = models.CharField(max_length=255)
+
+  def __str__(self):
+      return self.keyword
+
   
 class Reference(models.Model):
   name = models.CharField(max_length=255)
   reference = models.CharField(max_length=255)
   
+  def __str__(self):
+      return self.name
