@@ -7,7 +7,7 @@ class Basics(models.Model):
     name = models.CharField(max_length=255)
     label = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
-    phone =  PhoneNumberField(blank=True)
+    phone =  PhoneNumberField(blank=True, null=True)
     website = models.CharField(max_length=255, blank=True)
     summary = models.TextField(blank=True)
     address1 = models.CharField(max_length=255, blank=True)
@@ -39,7 +39,7 @@ class Job(models.Model):
   website = models.CharField(max_length=255, blank=True)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
-  summary = models.CharField(max_length=255)
+  summary = models.TextField(blank=True)
 
   def __str__(self):
       return self.company
@@ -59,7 +59,7 @@ class Volunteer(models.Model):
   website = models.CharField(max_length=255, blank=True)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
-  summary = models.CharField(max_length=255)
+  summary = models.TextField(max_length=255)
 
   def __str__(self):
       return self.organization
@@ -79,7 +79,7 @@ class Education(models.Model):
   degreeType = models.CharField(max_length=255)
   startDate = models.DateField(max_length=255)
   endDate = models.DateField(max_length=255)
-  gpa = models.DecimalField(max_digits=4, decimal_places=3, blank=True)
+  gpa = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
 
   class Meta:
     verbose_name_plural = "Education"
@@ -100,7 +100,7 @@ class Award(models.Model):
   title = models.CharField(max_length=255)
   date = models.DateField(max_length=255)
   awarder = models.CharField(max_length=255)
-  summary = models.CharField(max_length=255, blank=True)
+  summary = models.TextField(max_length=255, blank=True)
 
   def __str__(self):
       return self.title
@@ -111,11 +111,13 @@ class Publication(models.Model):
   publisher = models.CharField(max_length=255)
   releaseDate = models.DateField(max_length=255)
   website = models.CharField(max_length=255, blank=True)
-  summary = models.CharField(max_length=255, blank=True)
+  summary = models.TextField(max_length=255, blank=True)
+  doi = models.CharField(max_length=255, blank=True)
 
   def __str__(self):
 
       return self.title
+
 
 class Skill(models.Model):
   name = models.CharField(max_length=255)

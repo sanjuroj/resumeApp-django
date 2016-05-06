@@ -4,22 +4,63 @@ from django.contrib import admin
 
 from .models import *
 
+class JobHighlightInline(admin.TabularInline):
+    model = JobHighlight
+
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    inlines = [
+        JobHighlightInline
+    ]
+    
+
+class VolunteerHighlightInline(admin.StackedInline):
+    model = VolunteerHighlight
+
+@admin.register(Volunteer)
+class VolunteerAdmin(admin.ModelAdmin):
+    inlines = [
+        VolunteerHighlightInline
+    ]
+
+
+class CourseInline(admin.TabularInline):
+    model = Course
+
+@admin.register(Education)
+class EducationAdmin(admin.ModelAdmin):
+    inlines = [
+        CourseInline
+    ]
+
+
+class SkillKeywordInline(admin.StackedInline):
+    model = SkillKeyword
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    inlines = [
+        SkillKeywordInline
+    ]
+
+
+class InterestKeywordInline(admin.StackedInline):
+    model = InterestKeyword
+
+@admin.register(Interest)
+class InterestAdmin(admin.ModelAdmin):
+    inlines = [
+        InterestKeywordInline
+    ]
+
 
 admin.site.register((
     Basics,
     Profile,
-    Job,
-    JobHighlight,
-    Volunteer,
-    VolunteerHighlight,
-    Education,
-    Course,
     Award,
     Publication,
-    Skill,
-    SkillKeyword,
     Language,
-    Interest,
-    InterestKeyword,
     Reference,
-    ))
+))
+
+
