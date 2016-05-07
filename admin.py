@@ -4,18 +4,21 @@ from django.contrib import admin
 
 from .models import *
 
+
 class JobHighlightInline(admin.TabularInline):
     model = JobHighlight
+
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
     inlines = [
         JobHighlightInline
     ]
-    
+
 
 class VolunteerHighlightInline(admin.StackedInline):
     model = VolunteerHighlight
+
 
 @admin.register(Volunteer)
 class VolunteerAdmin(admin.ModelAdmin):
@@ -27,6 +30,7 @@ class VolunteerAdmin(admin.ModelAdmin):
 class CourseInline(admin.TabularInline):
     model = Course
 
+
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
     inlines = [
@@ -37,6 +41,7 @@ class EducationAdmin(admin.ModelAdmin):
 class SkillKeywordInline(admin.StackedInline):
     model = SkillKeyword
 
+
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     inlines = [
@@ -46,6 +51,7 @@ class SkillAdmin(admin.ModelAdmin):
 
 class InterestKeywordInline(admin.StackedInline):
     model = InterestKeyword
+
 
 @admin.register(Interest)
 class InterestAdmin(admin.ModelAdmin):
@@ -62,5 +68,3 @@ admin.site.register((
     Language,
     Reference,
 ))
-
-
