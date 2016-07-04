@@ -1,28 +1,16 @@
 from django.conf.urls import url, include
-from .models import Job
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
+from .views import APIAll
 
-
-# Serializers define the API representation.
-class JobSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Job
-        fields = ('company', 'position')
-
-
-# ViewSets define the view behavior.
-class JobViewSet(viewsets.ModelViewSet):
-    queryset = Job.objects.all()
-    serializer_class = JobSerializer
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'jobs', JobViewSet)
+router.register(r'^$', APIAll, 'api_all')
 
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api/', APIAll.as_view(), name='api_all')
+    #url(r'^api/', include(router.urls))
 ]
