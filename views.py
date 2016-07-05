@@ -6,34 +6,47 @@ from rest_framework import generics, serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-
-
 # Create your views here.
 
 
+class APIAll (APIView):
 
-class APIAll (APIView): 
+    def makeSerializer(self, modelName, highlightName=None):
+        print('mname=', modelName)
+        modelsModule = importlib.import_module('.models', 'resume')
+        modelObj = getattr(modelsModule, modelName)
+
+        class TempSerializer(serializers.ModelSerializer):
+
+            if highlightName is not None:
+                highlights = serializers.StringRelatedField(many=True)
+
+            class Meta:
+                model = modelObj
+
+        return TempSerializer(modelObj.objects.all(), many=True)
 
     def get(self, request):
 
-        categories = ['Job', 'Basics', 'Education']
-        modelsModule = importlib.import_module('.models','resume')
+        categories = [
+            ('Job', 'JobHighlight'),
+            ('Education', 'EducationHighlight'),
+            ('Volunteer', 'VolunteerHighlight'),
+            'Basics',
+        ]
 
-        
         responseArray = dict()
 
-        for c in categories:
-
-            modelObj = getattr(modelsModule, c)
-
-            class TempSerializer(serializers.ModelSerializer):
-                class Meta: 
-                    model = modelObj
-
-
-            serializer = TempSerializer(modelObj.objects.all(), many=True)
-            #print(serializer.__repr__())
-            responseArray[c.lower()] = serializer.data
+        for cat in categories:
+            print('c=', cat)
+            print(type(cat))
+            # print(serializer.__repr__())
+            if len(cat) == 2:
+                modelName = cat[0]
+                serializer = self.makeSerializer(cat[0], cat[1])
+            else:
+                modelName = cat
+                serializer = self.makeSerializer(modelName)
+            responseArray[modelName.lower()] = serializer.data
 
         return Response(responseArray)
-

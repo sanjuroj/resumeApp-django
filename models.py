@@ -47,7 +47,7 @@ class Job(models.Model):
 
 
 class JobHighlight(models.Model):
-    job = models.ForeignKey('Job', on_delete=models.CASCADE)
+    job = models.ForeignKey('Job', related_name='highlights')
     highlight = models.TextField()
 
     def __str__(self):
@@ -70,7 +70,7 @@ class Volunteer(models.Model):
 
 
 class VolunteerHighlight(models.Model):
-    volunteer = models.ForeignKey('Volunteer', on_delete=models.CASCADE)
+    volunteer = models.ForeignKey('Volunteer', related_name='highlights')
     highlight = models.TextField(max_length=255)
 
     def __str__(self):
@@ -93,7 +93,7 @@ class Education(models.Model):
 
 
 class EducationHighlight(models.Model):
-    education = models.ForeignKey('Education', on_delete=models.CASCADE)
+    education = models.ForeignKey('Education', related_name='highlights')
     highlight = models.TextField(max_length=255)
 
     def __str__(self):
