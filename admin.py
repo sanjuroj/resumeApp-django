@@ -30,11 +30,14 @@ class VolunteerAdmin(admin.ModelAdmin):
 class CourseInline(admin.TabularInline):
     model = Course
 
+class EducationHighlightInline(admin.StackedInline):
+    model = EducationHighlight
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
     inlines = [
-        CourseInline
+        EducationHighlightInline,
+        CourseInline,
     ]
 
 

@@ -16,7 +16,7 @@ class APIAll (APIView):
 
     def get(self, request):
 
-        categories = ['Job', 'Basics']
+        categories = ['Job', 'Basics', 'Education']
         modelsModule = importlib.import_module('.models','resume')
 
         

@@ -92,6 +92,14 @@ class Education(models.Model):
         return self.institution
 
 
+class EducationHighlight(models.Model):
+    education = models.ForeignKey('Education', on_delete=models.CASCADE)
+    highlight = models.TextField(max_length=255)
+
+    def __str__(self):
+        return self.highlight
+
+
 class Course(models.Model):
     education = models.ForeignKey('Education', on_delete=models.CASCADE)
     course = models.CharField(max_length=255)
