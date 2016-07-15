@@ -50,3 +50,4 @@ class APIAll (APIView):
             responseArray[modelName.lower()] = serializer.data
 
         return Response(responseArray)
+
