@@ -12,7 +12,7 @@ from rest_framework.response import Response
 class APIAll (APIView):
 
     def makeSerializer(self, modelName, highlightName=None):
-        print('mname=', modelName)
+        # print('mname=', modelName)
         modelsModule = importlib.import_module('.models', 'resume')
         modelObj = getattr(modelsModule, modelName)
 
@@ -38,8 +38,7 @@ class APIAll (APIView):
         responseArray = dict()
 
         for cat in categories:
-            print('c=', cat)
-            print(type(cat))
+            # print(type(cat))
             # print(serializer.__repr__())
             if len(cat) == 2:
                 modelName = cat[0]
