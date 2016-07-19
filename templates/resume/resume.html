@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<meta charSet="UTF-8">
-<html>
+{% extends 'sanjuroville/main.html' %}
 
-    <head>
-    </head>
-
-    <body>
-    Hello
-    <div id="target"></div>
+{% block body_block %} 
+    <div id="resume-container" class="container">
+        <div id="target"></div>
     
-    {% load staticfiles %}
-    <script src="{% static 'bundle.js' %}"></script>
-    </body>
+        {% load staticfiles %}
+        <script src="{% static 'bundle.js' %}"></script>
+    </div>
 
-</html>
-
-    
+{% endblock %}    

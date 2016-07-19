@@ -13,6 +13,6 @@ router.register(r'^$', APIAll, 'api_all')
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'api', APIAll.as_view(), name='api_all'),
-    url(r'', TemplateView.as_view(template_name='resume/resume.html'))
+    url(r'', TemplateView.as_view(template_name='resume/resume.html'), name='resume')
     # url(r'^api/', include(router.urls))
 ]
