@@ -39,8 +39,13 @@ class Job(models.Model):
     position = models.CharField(max_length=255)
     website = models.CharField(max_length=255, blank=True)
     startDate = models.DateField(max_length=255)
+    startDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     endDate = models.DateField(max_length=255)
+    endDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     summary = models.TextField(blank=True)
+    location = models.CharField(max_length=255)
 
     def __str__(self):
         return self.company
@@ -59,8 +64,12 @@ class Volunteer(models.Model):
     position = models.CharField(max_length=255)
     website = models.CharField(max_length=255, blank=True)
     startDate = models.DateField(max_length=255)
+    startDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     endDate = models.DateField(max_length=255)
-    summary = models.TextField(max_length=255)
+    endDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
+    summary = models.TextField(max_length=255, blank=True)
 
     class Meta:
         verbose_name_plural = 'Volunteering'
@@ -71,7 +80,7 @@ class Volunteer(models.Model):
 
 class VolunteerHighlight(models.Model):
     volunteer = models.ForeignKey('Volunteer', related_name='highlights')
-    highlight = models.TextField(max_length=255)
+    highlight = models.TextField()
 
     def __str__(self):
         return self.highlight
@@ -82,7 +91,11 @@ class Education(models.Model):
     major = models.CharField(max_length=255, blank=True)
     degreeType = models.CharField(max_length=255)
     startDate = models.DateField(max_length=255)
+    startDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     endDate = models.DateField(max_length=255)
+    endDatePrecision = models.CharField(max_length=1,
+        choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     gpa = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
 
     class Meta:
@@ -94,7 +107,7 @@ class Education(models.Model):
 
 class EducationHighlight(models.Model):
     education = models.ForeignKey('Education', related_name='highlights')
-    highlight = models.TextField(max_length=255)
+    highlight = models.TextField()
 
     def __str__(self):
         return self.highlight
