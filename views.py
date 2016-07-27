@@ -33,6 +33,8 @@ class APIAll (APIView):
             ('Education', 'EducationHighlight'),
             ('Volunteer', 'VolunteerHighlight'),
             'Basics',
+            'Skill',
+            'Language',
         ]
 
         responseArray = dict()
@@ -49,4 +51,3 @@ class APIAll (APIView):
             responseArray[modelName.lower()] = serializer.data
 
         return Response(responseArray)
-
