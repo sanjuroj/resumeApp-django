@@ -1,5 +1,7 @@
 {% extends 'sanjuroville/main.html' %}
 
+{% load render_bundle from webpack_loader %}
+
 {% block nav_resume %}
 <li class="active"><a href={% url 'resume' %}>Resume</a></li>
 {% endblock %}
@@ -8,7 +10,10 @@
 {% block body_block %} 
     <div id="resume-container" class="container">
         <div id="target"></div>
-    
+        
+        <!-- {% render_bundle 'main' %} -->
+
+
         {% load staticfiles %}
         <script src="{% static 'bundle.js' %}"></script>
     </div>
