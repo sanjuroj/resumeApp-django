@@ -1,6 +1,10 @@
 {% extends 'sanjuroville/main.html' %}
-
+{% load staticfiles %}
 {% load render_bundle from webpack_loader %}
+
+{% block styles %}
+<!-- <link rel="stylesheet" href={% static 'resume-styles.css' %} /> -->
+{% endblock %}
 
 {% block nav_resume %}
 <li class="active"><a href={% url 'resume' %}>Resume</a></li>
@@ -14,7 +18,7 @@
         <!-- {% render_bundle 'main' %} -->
 
 
-        {% load staticfiles %}
+        
         <script src="{% static 'bundle.js' %}"></script>
     </div>
 
