@@ -45,7 +45,7 @@ class Job(models.Model):
     endDatePrecision = models.CharField(max_length=1,
         choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     summary = models.TextField(blank=True)
-    location = models.CharField(max_length=255)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.company
@@ -70,6 +70,7 @@ class Volunteer(models.Model):
     endDatePrecision = models.CharField(max_length=1,
         choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     summary = models.TextField(max_length=255, blank=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Volunteering'
@@ -97,6 +98,7 @@ class Education(models.Model):
     endDatePrecision = models.CharField(max_length=1,
         choices=(('d', 'Day'), ('m', 'Month'), ('y', 'Year')))
     gpa = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Education"
