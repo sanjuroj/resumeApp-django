@@ -11,6 +11,13 @@ from rest_framework.response import Response
 
 class APIAll (APIView):
 
+    titles = {
+        'Job': 'Work Experience',
+        'Volunteer': 'Volunteering',
+        'Skill': 'Skills',
+        'Language': 'Languages'
+    }
+
     def makeSerializer(self, modelName, highlightName=None):
         # print('mname=', modelName)
         modelsModule = importlib.import_module('.models', 'resume')
@@ -20,6 +27,11 @@ class APIAll (APIView):
 
             if highlightName is not None:
                 highlights = serializers.StringRelatedField(many=True)
+
+            if modelName in self.titles:
+                title = self.titles[modelName]
+            else:
+                title = modelName
 
             class Meta:
                 model = modelObj
